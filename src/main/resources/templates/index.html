@@ -52,13 +52,13 @@
 
         <h1>Найти товар</h1>
 
-        <form method="GET" th:action="@{/products/find/{id}}">
+        <form method="GET" th:action="@{/products/find/{maxPrice}}">
             <div class="mb-3">
-                <label for="idField" class="form-label">ID</label>
-                <input type="number" class="form-control" id="idField" name="id">
+                <label for="idField" class="form-label">По цене не более:</label>
+                <input type="number" class="form-control" id="idField" name="maxPrice">
             </div>
 
-            <button type="submit" class="btn btn-primary">Подтвердить</button>
+            <button type="submit" class="btn btn-primary">Найти</button>
         </form>
 </div>
 </body>

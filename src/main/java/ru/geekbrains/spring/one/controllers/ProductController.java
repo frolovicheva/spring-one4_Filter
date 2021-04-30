@@ -3,6 +3,7 @@ package ru.geekbrains.spring.one.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,10 +53,11 @@ public class ProductController {
         return "redirect:/";
     }
 
-    @GetMapping("/products/find/{id}")
-    public String showProductInfo2(@RequestParam Long id, Model model) {
-        productService.findOneById(id).ifPresent(p -> model.addAttribute("product", p));
-        return "product_info";
+    @GetMapping("/products/find/{maxPrice}")
+    public String findAllByPriceLessThan(@RequestParam int maxPrice, Model model) {
+        Page<Product> page = productService.findAllByPriceLessThan (maxPrice, Pageable.unpaged ());
+        model.addAttribute("page", page);
+        return "redirect:/";
     }
 
 
