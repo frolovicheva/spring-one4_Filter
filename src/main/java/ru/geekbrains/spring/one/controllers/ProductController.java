@@ -3,6 +3,7 @@ package ru.geekbrains.spring.one.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,8 +55,11 @@ public class ProductController {
     }
 
     @GetMapping("/products/find/{maxPrice}")
-    public String findAllByPriceLessThan(@RequestParam int maxPrice, Model model) {
-        Page<Product> page = productService.findAllByPriceLessThan (maxPrice, Pageable.unpaged ());
+    public String findAllByPriceLessThan(
+            Model model,
+            @RequestParam(name = "maxPrice", defaultValue = "10000") int maxPrice,
+            @RequestParam(name = "p", defaultValue = "1") int pageIndex) {
+        Page<Product> page = productService.findAllByPriceLessThan (maxPrice,pageIndex-1,4);
         model.addAttribute("page", page);
         return "redirect:/";
     }
@@ -64,6 +68,12 @@ public class ProductController {
     @GetMapping("/products/{id}")
     public String showProductInfo(@PathVariable(name = "id") Long id, Model model) {
         productService.findOneById(id).ifPresent(p -> model.addAttribute("product", p));
+        return "product_info";
+    }
+
+    @GetMapping("/products/{title}")
+    public String findProductByTitle(@RequestParam(name = "title") String title, Model model) {
+        productService.findOneByTitle (title).ifPresent(p -> model.addAttribute("product", p));
         return "product_info";
     }
 

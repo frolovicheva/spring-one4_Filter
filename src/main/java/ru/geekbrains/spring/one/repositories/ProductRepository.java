@@ -14,10 +14,11 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-//    Optional<Product> findOneByTitle(String title);
+     Optional<Product> findOneByTitle(String title);
      Page<Product> findAllByPriceLessThan(int maxPrice, Pageable pageable);
 //    List<Product> findAllByPriceBetween(int min, int max);
 //    List<Product> findAllByIdLessThanAndPriceGreaterThan(Long maxId, int minPrice);
 //    @Query("select p from Product p where p.id = :id")
 //    List<Product> hqlFindById(Long id);
+//    Page<Product> findAllByPriceLessThan(int maxPrice, int page, int size);
 }

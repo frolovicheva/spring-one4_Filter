@@ -38,8 +38,11 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public Page<Product> findAllByPriceLessThan(int maxPrice, Pageable pageable){
-        return productRepository.findAllByPriceLessThan (maxPrice, pageable);
+    public Page<Product> findAllByPriceLessThan(int maxPrice, int pageIndex, int pageSise ){
+        return productRepository.findAllByPriceLessThan (maxPrice, PageRequest.of (pageIndex,pageSise));
+    }
+    public Optional<Product> findOneByTitle(String title) {
+        return productRepository.findOneByTitle (title);
     }
 
     @Transactional
